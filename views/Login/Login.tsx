@@ -2,6 +2,9 @@ import Image from "next/image";
 import { Button, Container, ContainerElement, Header, Input } from "./styles";
 
 const Login = () => {
+  const navigateToHome = () => {
+    console.log("navigateToHome");
+  };
   return (
     <>
       <Header>
@@ -21,9 +24,9 @@ const Login = () => {
             height={160}
             alt="pokeball"
           />
-          <form action="">
-            <Input type="email" placeholder="Seu melhor e-mail" />
-            <Button>Acessar</Button>
+          <form onSubmit={navigateToHome}>
+            <Input type="email" required placeholder="Seu melhor e-mail" />
+            <Button type="submit">Acessar</Button>
           </form>
         </ContainerElement>
       </Container>

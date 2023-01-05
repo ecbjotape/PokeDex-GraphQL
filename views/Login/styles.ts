@@ -34,20 +34,21 @@ export const Header = styled.header`
 `;
 
 export const Input = styled.input`
-  font-size: 18px;
+  font-size: 16px;
   padding: 0.5em;
-  font-weight: 300;
-  color: ${({ theme }) => theme.text};
+  font-weight: 400;
+  color: #848484;
   width: 100%;
   border: 1px solid #ececec;
 `;
 
 export const Button = styled.button`
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   background: #0854d4;
   color: #fff;
   border-style: none;
-  padding: 1em 2em;
+  padding: 1em 3em;
   align-self: flex-start;
+  border-radius: 3px;
 `;
