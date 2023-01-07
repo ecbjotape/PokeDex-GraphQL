@@ -1,75 +1,41 @@
-import { gql, useLazyQuery } from "@apollo/client";
-import Toggle from "components/Toggle";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import Loading from "components/Loading";
+import { POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
 import { useEffect, useState } from "react";
+import { Pokemon } from "types/pokemon";
+import PokemonOverview from "./PokemonOverview";
+
 import {
-  Card,
   Container,
-  ContainerElement,
-  ContentElement,
   Input,
   Line,
   Menu,
   MenuContainer,
-  NameElement,
   NamePokemon,
   SearchBar,
   Text,
-  TitleElement,
 } from "./styles";
 
-const POKEMON_QUERY = gql`
-  query pokemons($limit: Int, $offset: Int) {
-    pokemons(limit: $limit, offset: $offset) {
-      results {
-        id
-        url
-        name
-        image
-      }
-    }
-  }
-`;
-
-const POKEMON_BY_NAME = gql`
-  query pokemon($name: String!) {
-    pokemon(name: $name) {
-      id
-      name
-      abilities {
-        ability {
-          name
-        }
-      }
-      moves {
-        move {
-          name
-        }
-      }
-      types {
-        type {
-          name
-        }
-      }
-      message
-      status
-    }
-  }
-`;
-
 const Home = () => {
-  const [getPokemons, { data: pokeData }] = useLazyQuery(POKEMON_QUERY);
-  const [pokemonSelected, setPokemonSelected] = useState(pokeData);
-  const [getPokemonByName, { data: Pokemon }] = useLazyQuery(POKEMON_BY_NAME, {
-    variables: pokemonSelected?.name,
+  const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
+  const { loading, data: pokeData } = useQuery(POKEMON_QUERY, {
+    variables: {
+      limit: 1154,
+    },
   });
 
-  useEffect(() => {
-    getPokemons();
-  }, []);
+  const [getPokemonByName, { data: pokemon }] = useLazyQuery(POKEMON_BY_NAME, {
+    variables: {
+      name: pokemonSelected?.name,
+    },
+  });
 
-  useEffect(() => {
+  const _getPokemonByName = (pokemon: Pokemon) => {
+    setPokemonSelected(pokemon);
+
     getPokemonByName();
-  }, [pokemonSelected]);
+  };
+
   return (
     <Container>
       <Menu>
@@ -83,32 +49,33 @@ const Home = () => {
         </SearchBar>
         <Line />
         <MenuContainer>
-          {pokeData?.pokemons?.results?.map((pokemon: any) => (
-            <NamePokemon onClick={() => setPokemonSelected(pokemon)}>
-              #{pokemon?.id} - {pokemon?.name}
-            </NamePokemon>
-          ))}
+          {loading ? (
+            <Loading />
+          ) : (
+            pokeData.pokemons.results.map((pokemon: any) => (
+              <NamePokemon
+                key={pokemon.id}
+                onClick={() => _getPokemonByName(pokemon)}
+              >
+                #{pokemon?.id} - {pokemon?.name}
+              </NamePokemon>
+            ))
+          )}
         </MenuContainer>
       </Menu>
-      <ContainerElement>
-        <TitleElement>
-          <NameElement>
-            #{Pokemon} - {Pokemon?.name}
-            <img src={pokemonSelected?.image} alt="imagem do pokemon" />
-          </NameElement>
-          <Toggle />
-        </TitleElement>
-        <ContentElement>
-          <div>
-            <img src={pokemonSelected?.image} alt="imagem do pokemon" />
-            <Card>Type</Card>
-          </div>
-          <div>
-            <img src="/images/pokeball.svg" alt="imagem do pokemon" />
-            <Card>Type</Card>
-          </div>
-        </ContentElement>
-      </ContainerElement>
+      {pokemon && pokemonSelected ? (
+        <PokemonOverview
+          id={pokemon?.pokemon?.id}
+          image={pokemonSelected?.image}
+          artwork={pokemonSelected.artwork}
+          name={pokemon?.pokemon?.name}
+          types={pokemon?.pokemon?.types}
+          height={pokemon?.pokemon?.height}
+          weight={pokemon?.pokemon?.weight}
+        />
+      ) : (
+        <Loading />
+      )}
     </Container>
   );
 };
