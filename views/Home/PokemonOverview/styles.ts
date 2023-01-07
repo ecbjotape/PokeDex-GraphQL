@@ -53,7 +53,6 @@ export const Card = styled.div`
   border-radius: 8px;
   gap: 1em;
   font-weight: 700;
-  box-sizing: content-box;
   box-shadow: 1px 1px #c4c4c4;
   flex-wrap: nowrap;
   white-space: nowrap;

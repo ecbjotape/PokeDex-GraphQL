@@ -1,17 +1,21 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import Loading from "components/Loading";
+import Toggle from "components/Toggle";
 import { POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
 import { useEffect, useState } from "react";
 import { Pokemon } from "types/pokemon";
 import PokemonOverview from "./PokemonOverview";
 
 import {
+  Center,
   Container,
+  ContainerElement,
   Input,
   Line,
   Menu,
   MenuContainer,
   NamePokemon,
+  OakImg,
   SearchBar,
   Text,
 } from "./styles";
@@ -24,11 +28,12 @@ const Home = () => {
     },
   });
 
-  const [getPokemonByName, { data: pokemon }] = useLazyQuery(POKEMON_BY_NAME, {
-    variables: {
-      name: pokemonSelected?.name,
-    },
-  });
+  const [getPokemonByName, { data: pokemon, loading: requestPokemon }] =
+    useLazyQuery(POKEMON_BY_NAME, {
+      variables: {
+        name: pokemonSelected?.name,
+      },
+    });
 
   const _getPokemonByName = (pokemon: Pokemon) => {
     setPokemonSelected(pokemon);
@@ -50,7 +55,9 @@ const Home = () => {
         <Line />
         <MenuContainer>
           {loading ? (
-            <Loading />
+            <div style={{ display: "flex" }}>
+              <Loading option="pokeball" />
+            </div>
           ) : (
             pokeData.pokemons.results.map((pokemon: any) => (
               <NamePokemon
@@ -63,7 +70,26 @@ const Home = () => {
           )}
         </MenuContainer>
       </Menu>
-      {pokemon && pokemonSelected ? (
+
+      {!pokemonSelected && (
+        <ContainerElement>
+          <OakImg src="/images/prof-oak.png" alt="imagem do professor oak" />
+          <Center>
+            <h1>choose your pokemon</h1>
+            <Loading option="dugtrio" />
+          </Center>
+        </ContainerElement>
+      )}
+
+      {requestPokemon && (
+        <ContainerElement>
+          <Center>
+            <Loading option="pokeball" />
+          </Center>
+        </ContainerElement>
+      )}
+
+      {pokemon && pokemonSelected && (
         <PokemonOverview
           id={pokemon?.pokemon?.id}
           image={pokemonSelected?.image}
@@ -73,8 +99,6 @@ const Home = () => {
           height={pokemon?.pokemon?.height}
           weight={pokemon?.pokemon?.weight}
         />
-      ) : (
-        <Loading />
       )}
     </Container>
   );

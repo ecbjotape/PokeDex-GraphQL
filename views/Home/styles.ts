@@ -69,3 +69,24 @@ export const MenuContainer = styled.div`
   overflow: auto;
   max-height: 600px;
 `;
+
+export const ContainerElement = styled.div`
+  background: ${({ theme }) => theme.background.containerElement};
+  padding: 5em 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+`;
+
+export const OakImg = styled.img`
+  width: 15%;
+  object-fit: cover;
+`;
+
+export const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;

@@ -1,17 +1,29 @@
-import Lottie from 'react-lottie'
-import pikachuLoading from './pikachu-loading.json'
+import Lottie from "react-lottie";
+import pikachu from "./pikachu-loading.json";
+import dugtrio from "./dugtrio.json";
+import pokeball from "./pokeball-loading.json";
 
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: pikachuLoading,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMin meet',
-  },
+const animation: any = {
+  pikachu,
+  dugtrio,
+  pokeball,
+};
+
+interface LoadingProps {
+  option: string;
 }
 
-const Loading = () => {
-  return <Lottie options={defaultOptions} height={250} width={400} />
-}
+const Loading = ({ option }: LoadingProps) => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animation[option],
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMin meet",
+    },
+  };
 
-export default Loading
+  return <Lottie options={defaultOptions} height={250} width={400} />;
+};
+
+export default Loading;
