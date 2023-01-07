@@ -6,10 +6,9 @@ export const Container = styled.div`
   height: 100vh;
 `;
 
-// menu lateral
 export const Menu = styled.div`
   background: ${({ theme }) => theme.background.menu};
-  padding: 3em 3em;
+  padding: 3em 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,50 +67,26 @@ export const NamePokemon = styled.div`
 export const MenuContainer = styled.div`
   width: 100%;
   overflow: auto;
-  max-height: 520px;
+  max-height: 600px;
 `;
 
-// conteúdo à direita
 export const ContainerElement = styled.div`
   background: ${({ theme }) => theme.background.containerElement};
-  padding: 3em;
+  padding: 5em 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2em;
 `;
 
-export const TitleElement = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+export const OakImg = styled.img`
+  width: 15%;
+  object-fit: cover;
 `;
 
-export const NameElement = styled.p`
+export const Center = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.color};
-  font-size: 56px;
-  gap: 0.5em;
-`;
-
-export const ContentElement = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-export const Card = styled.div`
-  width: 100%;
-  background: #fff;
-  padding: 16px;
-  color: #000;
-  border-radius: 8px;
+  flex-direction: row;
 `;
