@@ -2,7 +2,7 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import Loading from "components/Loading";
 import Toggle from "components/Toggle";
 import { EVOLUTION_BY_ID, POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Pokemon } from "types/pokemon";
 import PokemonOverview from "./PokemonOverview";
 
@@ -57,11 +57,25 @@ const Home = () => {
     let pokemonList = pokeData?.pokemons?.results;
 
     if (searchPokemon) {
-      pokemonList = pokeData?.pokemons?.results?.filter((pokemon: any) =>
-        pokemon.name.toLowerCase().includes(searchPokemon.toLowerCase())
+      // filtro com base no nome
+      const filteredByName = pokeData?.pokemons?.results?.filter(
+        (pokemon: Pokemon) =>
+          pokemon.name.toLowerCase().includes(searchPokemon.toLowerCase())
       );
-    }
 
+      // filtro com base no id
+      const filteredById = pokeData?.pokemons?.results?.filter(
+        (pokemon: Pokemon) => String(pokemon.id).includes(searchPokemon)
+      );
+
+      const filteredsPokemons = [...filteredByName, ...filteredById];
+
+      // remove elementos duplicados do array
+      // @ts-ignore
+      const _pokemonList = [...new Set(filteredsPokemons)];
+
+      pokemonList = _pokemonList;
+    }
     return pokemonList;
   }, [searchPokemon, pokeData]);
 
@@ -76,18 +90,19 @@ const Home = () => {
           <Input
             type="text"
             onChange={(e: any) => setSearchPokemon(e.target.value)}
-            placeholder="Search by name of number"
+            placeholder="Search by name or number"
           />
           {/* <img src="/icons/search.svg" alt="pesquisar" /> */}
         </SearchBar>
         <Line />
         <MenuContainer>
           {loading ? (
-            <div style={{ display: "flex" }}>
-              <Loading option="pokeball" />
-            </div>
-          ) : (
-            filteredPokemonList.map((pokemon: any) => (
+            <Center style={{ flexDirection: "column" }}>
+              <Loading option="pokeball" width="50%" />
+              <p>loading...</p>
+            </Center>
+          ) : filteredPokemonList?.length > 0 ? (
+            filteredPokemonList?.map((pokemon: any) => (
               <NamePokemon
                 key={pokemon.id}
                 onClick={() => getPokemonSelected(pokemon)}
@@ -95,6 +110,11 @@ const Home = () => {
                 #{pokemon?.id} - {pokemon?.name}
               </NamePokemon>
             ))
+          ) : (
+            <Center style={{ flexDirection: "column" }}>
+              <Loading option="pikachu" width="100%" height="100%" />
+              <p>pokemon not found...</p>
+            </Center>
           )}
         </MenuContainer>
       </Menu>
@@ -105,6 +125,7 @@ const Home = () => {
           <Center>
             <h1>choose your pokemon</h1>
             <Loading option="dugtrio" height={120} width={250} />
+            <Toggle />
           </Center>
         </ContainerElement>
       )}

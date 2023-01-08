@@ -6,7 +6,6 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
-    color: #fff;
 
     ::-webkit-scrollbar {
       width: 8px;

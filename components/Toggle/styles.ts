@@ -41,6 +41,7 @@ export const CheckBoxLabel = styled.label`
     transition: 0.2s;
   }
 `;
+
 export const CheckBox = styled.input`
   opacity: 0;
   z-index: 1;

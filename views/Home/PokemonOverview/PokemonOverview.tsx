@@ -1,4 +1,6 @@
+import { theme } from "atoms/theme";
 import Toggle from "components/Toggle";
+import { useRecoilState } from "recoil";
 import { attributes, types } from "types/pokemon";
 import { formatKgToLbs, formatMetersToFeet } from "utils/utils";
 import {

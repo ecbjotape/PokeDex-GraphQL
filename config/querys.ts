@@ -45,3 +45,9 @@ export const EVOLUTION_BY_ID = gql`
     }
   }
 `;
+
+export const THEME = gql`
+  query theme {
+    isDark @client
+  }
+`;

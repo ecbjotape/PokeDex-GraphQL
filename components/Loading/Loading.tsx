@@ -11,8 +11,8 @@ const animation: any = {
 
 interface LoadingProps {
   option: string;
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
 }
 
 const Loading = ({ option, height, width }: LoadingProps) => {
