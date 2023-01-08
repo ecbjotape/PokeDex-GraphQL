@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const Menu = styled.div`
   background: ${({ theme }) => theme.background.menu};
-  padding: 3em 2em;
+  padding: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,9 +65,11 @@ export const NamePokemon = styled.div`
 `;
 
 export const MenuContainer = styled.div`
-  width: 100%;
-  overflow: auto;
   max-height: 600px;
+  overflow: auto;
+  position: relative;
+  width: 120%;
+  padding-left: 2rem;
 `;
 
 export const ContainerElement = styled.div`
@@ -76,6 +78,7 @@ export const ContainerElement = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2em;
 `;
 
@@ -89,4 +92,9 @@ export const Center = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 500;
+  }
 `;

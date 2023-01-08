@@ -26,6 +26,16 @@ export const lightTheme = {
     dark: "#705746",
     steel: "#B7B7CE",
     fairy: "#D685AD",
+    default: "#A8A77A",
+  },
+  statsColor: {
+    hp: "#fc5c5c",
+    attack: "#fc9c5c",
+    defense: "#fccc04",
+    "special-attack": "#046cec",
+    "special-defense": "#4cc454",
+    speed: "#fc74a4",
+    default: "#A8A77A",
   },
 };
 

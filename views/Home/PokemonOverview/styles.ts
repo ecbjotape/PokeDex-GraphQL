@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { types } from "types/pokemon";
+import { stats, types } from "types/pokemon";
 
 export const ContainerElement = styled.div`
   background: ${({ theme }) => theme.background.containerElement};
-  padding: 2em 5em;
+  padding: 1em 4em 0em 4em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,17 +38,18 @@ export const CardElement = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4em;
+  gap: 3em;
 `;
 
 export const Card = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  min-width: 250px;
   width: 100%;
   background: #fff;
-  padding: 8px 12px;
+  padding: 12px 16px;
   color: #000;
   border-radius: 8px;
   gap: 1em;
@@ -56,6 +57,11 @@ export const Card = styled.div`
   box-shadow: 1px 1px #c4c4c4;
   flex-wrap: nowrap;
   white-space: nowrap;
+
+  p {
+    color: #000;
+    font-weight: 400;
+  }
 `;
 
 interface CardTypeProps {
@@ -67,7 +73,39 @@ export const CardType = styled.div<CardTypeProps>`
   padding: 4px 16px;
   color: #fff;
   border-radius: 8px;
+  font-weight: 400;
   text-transform: uppercase;
+`;
+
+interface CardStatsProps {
+  stats: stats;
+}
+
+export const CardStats = styled.div<CardStatsProps>`
+  background: ${(props) => props.theme.statsColor[props.stats]};
+  padding: 4px 16px;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  max-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+
+  p {
+    color: ${(props) => props.theme.color};
+  }
+`;
+
+export const StatsElements = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
 `;
 
 export const Row = styled.div`

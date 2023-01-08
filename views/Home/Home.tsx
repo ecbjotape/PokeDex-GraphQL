@@ -1,8 +1,8 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import Loading from "components/Loading";
 import Toggle from "components/Toggle";
-import { POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
-import { useEffect, useState } from "react";
+import { EVOLUTION_BY_ID, POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
+import { useEffect, useMemo, useState } from "react";
 import { Pokemon } from "types/pokemon";
 import PokemonOverview from "./PokemonOverview";
 
@@ -22,7 +22,9 @@ import {
 
 const Home = () => {
   const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
-  const { loading, data: pokeData } = useQuery(POKEMON_QUERY, {
+  const [searchPokemon, setSearchPokemon] = useState("");
+
+  let { loading, data: pokeData } = useQuery(POKEMON_QUERY, {
     variables: {
       limit: 1154,
     },
@@ -35,11 +37,33 @@ const Home = () => {
       },
     });
 
-  const _getPokemonByName = (pokemon: Pokemon) => {
+  const [getEvolutionsById, { data: evolutions }] = useLazyQuery(
+    EVOLUTION_BY_ID,
+    {
+      variables: {
+        id: String(pokemonSelected?.id),
+      },
+    }
+  );
+
+  const getPokemonSelected = (pokemon: Pokemon) => {
     setPokemonSelected(pokemon);
 
+    getEvolutionsById();
     getPokemonByName();
   };
+
+  const filteredPokemonList = useMemo(() => {
+    let pokemonList = pokeData?.pokemons?.results;
+
+    if (searchPokemon) {
+      pokemonList = pokeData?.pokemons?.results?.filter((pokemon: any) =>
+        pokemon.name.toLowerCase().includes(searchPokemon.toLowerCase())
+      );
+    }
+
+    return pokemonList;
+  }, [searchPokemon, pokeData]);
 
   return (
     <Container>
@@ -49,7 +73,11 @@ const Home = () => {
           Everything you wanted to know about your favorite pocket monsters!
         </Text>
         <SearchBar>
-          <Input type="text" placeholder="Search by name of number" />
+          <Input
+            type="text"
+            onChange={(e: any) => setSearchPokemon(e.target.value)}
+            placeholder="Search by name of number"
+          />
           {/* <img src="/icons/search.svg" alt="pesquisar" /> */}
         </SearchBar>
         <Line />
@@ -59,10 +87,10 @@ const Home = () => {
               <Loading option="pokeball" />
             </div>
           ) : (
-            pokeData.pokemons.results.map((pokemon: any) => (
+            filteredPokemonList.map((pokemon: any) => (
               <NamePokemon
                 key={pokemon.id}
-                onClick={() => _getPokemonByName(pokemon)}
+                onClick={() => getPokemonSelected(pokemon)}
               >
                 #{pokemon?.id} - {pokemon?.name}
               </NamePokemon>
@@ -76,7 +104,7 @@ const Home = () => {
           <OakImg src="/images/prof-oak.png" alt="imagem do professor oak" />
           <Center>
             <h1>choose your pokemon</h1>
-            <Loading option="dugtrio" />
+            <Loading option="dugtrio" height={120} width={250} />
           </Center>
         </ContainerElement>
       )}
@@ -98,6 +126,8 @@ const Home = () => {
           types={pokemon?.pokemon?.types}
           height={pokemon?.pokemon?.height}
           weight={pokemon?.pokemon?.weight}
+          stats={pokemon?.pokemon?.stats}
+          evolutions={evolutions?.evolutionChain?.response?.chain}
         />
       )}
     </Container>

@@ -1,14 +1,16 @@
 import Toggle from "components/Toggle";
-import { types } from "types/pokemon";
-import { formatKgToLbs } from "utils/utils";
+import { attributes, types } from "types/pokemon";
+import { formatKgToLbs, formatMetersToFeet } from "utils/utils";
 import {
   Card,
   CardElement,
+  CardStats,
   CardType,
   ContainerElement,
   ContentElement,
   NameElement,
   Row,
+  StatsElements,
   TitleElement,
 } from "./styles";
 
@@ -20,6 +22,8 @@ interface PokemonOverviewProps {
   types: any;
   weight: number;
   height: number;
+  stats: any;
+  evolutions: any;
 }
 
 const PokemonOverview = ({
@@ -30,12 +34,23 @@ const PokemonOverview = ({
   weight,
   height,
   artwork,
+  stats,
+  evolutions,
 }: PokemonOverviewProps) => {
+  const attributes: any = {
+    hp: "hp",
+    speed: "speed",
+    attack: "atk",
+    defense: "def",
+    "special-attack": "sp. atk",
+    "special-defense": "sp. def",
+  };
+
   return (
     <ContainerElement>
       <TitleElement>
         <NameElement>
-          #{id} - {name}
+          #{id || "N/A"} - {name || "N/A"}
           <img src={image} alt="imagem do pokemon" />
         </NameElement>
         <Toggle />
@@ -52,7 +67,7 @@ const PokemonOverview = ({
               }}
             />
           </Card>
-          <Card>
+          <Card style={{ justifyContent: "flex-start", paddingLeft: "40px" }}>
             Type
             {types?.map((type: { type: { name: any } }) => (
               <CardType key={type.type.name} type={type.type.name}>
@@ -61,11 +76,34 @@ const PokemonOverview = ({
             ))}
           </Card>
           <Row>
-            <Card>Height: {height}</Card>
-            <Card>Weight: {formatKgToLbs(weight)}</Card>
+            <Card>
+              Height: <p>{formatMetersToFeet(height)}</p>
+            </Card>
+            <Card>
+              Weight:
+              <p>{formatKgToLbs(weight)}</p>
+            </Card>
           </Row>
+          <Card
+            style={{
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            Attributes
+            <StatsElements>
+              {stats?.map((stats: attributes) => (
+                <CardStats key={stats.stat.name} stats={stats.stat.name}>
+                  <p>{stats.base_stat}</p>
+                  <p>{attributes[stats.stat.name]}</p>
+                </CardStats>
+              ))}
+            </StatsElements>
+          </Card>
         </CardElement>
-        <div style={{ backgroundColor: "black" }}>grid 2</div>
+        <CardElement>
+          <Card>Evolutions</Card>
+        </CardElement>
       </ContentElement>
     </ContainerElement>
   );

@@ -7,10 +7,13 @@ export type Pokemon = {
   artwork: string;
   types?: any[];
   sprites?: any;
-  stats?: {
-    hp: number;
-    attack: number;
-    defense: number;
+  stats?: attributes;
+};
+
+export type attributes = {
+  base_stat: number;
+  stat: {
+    name: stats;
   };
 };
 
@@ -34,3 +37,11 @@ export type types =
   | "steel"
   | "fairy"
   | "default";
+
+export type stats =
+  | "hp"
+  | "attack"
+  | "defense"
+  | "sprecial-attack"
+  | "special-defense"
+  | "speed";

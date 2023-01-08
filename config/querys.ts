@@ -29,6 +29,7 @@ export const POKEMON_BY_NAME = gql`
         }
       }
       stats {
+        base_stat
         stat {
           name
         }
@@ -37,12 +38,9 @@ export const POKEMON_BY_NAME = gql`
   }
 `;
 
-export const EVOLUTION_BY_NAME = gql`
-  query evolutionTrigger($name: String!) {
-    evolutionTrigger(name: $name) {
-      params
-      status
-      message
+export const EVOLUTION_BY_ID = gql`
+  query evolutionChain($id: String!) {
+    evolutionChain(id: $id) {
       response
     }
   }
