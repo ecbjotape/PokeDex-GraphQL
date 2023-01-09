@@ -1,4 +1,6 @@
 import { gql } from "@apollo/client";
+import { RESTDataSource } from "apollo-datasource-rest";
+import { formatEvolvesPokemon } from "utils/utils";
 
 export const POKEMON_QUERY = gql`
   query pokemons($limit: Int, $offset: Int) {
@@ -29,6 +31,7 @@ export const POKEMON_BY_NAME = gql`
         }
       }
       stats {
+        base_stat
         stat {
           name
         }
@@ -37,13 +40,29 @@ export const POKEMON_BY_NAME = gql`
   }
 `;
 
-export const EVOLUTION_BY_NAME = gql`
-  query evolutionTrigger($name: String!) {
-    evolutionTrigger(name: $name) {
-      params
-      status
-      message
+export const EVOLUTION_BY_ID = gql`
+  query evolutionChain($id: String!) {
+    evolutionChain(id: $id) {
       response
     }
   }
 `;
+
+export const THEME = gql`
+  query theme {
+    isDark @client
+  }
+`;
+
+// API do graphQL não está exportando o id da espécie (id da espécie é diferente da pokedex)
+export const getPokemonSpecies = (id: string | number) => {
+  return fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((T) =>
+    T.json()
+  );
+};
+
+export const getEvolutionChain = async (endpoint: string) => {
+  return formatEvolvesPokemon(
+    await fetch(endpoint).then((response) => response.json())
+  );
+};

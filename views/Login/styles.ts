@@ -14,7 +14,7 @@ export const ContainerElement = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1.5em;
-  width: 20%;
+  /* width: 20%; */
   form {
     display: flex;
     flex-direction: column;
@@ -31,6 +31,17 @@ export const Header = styled.header`
   font-size: 1.5rem;
   padding: 2.5rem;
   background-color: #e04c4c;
+`;
+
+export const Logo = styled.img``;
+
+export const Config = styled.img`
+  width: 40px;
+  height: 40px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const Input = styled.input`
@@ -51,4 +62,8 @@ export const Button = styled.button`
   padding: 1em 3em;
   align-self: flex-start;
   border-radius: 3px;
+`;
+
+export const Pokeball = styled.img`
+  width: 50%;
 `;

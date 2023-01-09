@@ -1,5 +1,14 @@
 import Image from "next/image";
-import { Button, Container, ContainerElement, Header, Input } from "./styles";
+import {
+  Button,
+  Config,
+  Container,
+  ContainerElement,
+  Header,
+  Input,
+  Logo,
+  Pokeball,
+} from "./styles";
 import { useRouter } from "next/router";
 
 const Login = () => {
@@ -8,29 +17,18 @@ const Login = () => {
   const navigateToHome = (e: any) => {
     e.preventDefault();
 
-    console.log("redirecionando para home...");
     router.push("/home");
   };
 
   return (
     <>
       <Header>
-        <img src="/images/logo-pokedex.webp" alt="Logo pokedex" />
-        <Image
-          src="/images/settings.svg"
-          width={40}
-          height={40}
-          alt="engrenagem"
-        />
+        <Logo src="/images/logo-pokedex.webp" alt="Logo pokedex" />
+        <Config src="/images/settings.svg" alt="engrenagem" />
       </Header>
       <Container>
         <ContainerElement>
-          <Image
-            src="/images/pokeball.svg"
-            width={160}
-            height={160}
-            alt="pokeball"
-          />
+          <Pokeball src="/images/pokeball.svg" alt="pokeball" />
           <form onSubmit={navigateToHome}>
             <Input type="email" required placeholder="Seu melhor e-mail" />
             <Button type="submit">Acessar</Button>

@@ -11,9 +11,11 @@ const animation: any = {
 
 interface LoadingProps {
   option: string;
+  height?: number | string;
+  width?: number | string;
 }
 
-const Loading = ({ option }: LoadingProps) => {
+const Loading = ({ option, height, width }: LoadingProps) => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -23,7 +25,13 @@ const Loading = ({ option }: LoadingProps) => {
     },
   };
 
-  return <Lottie options={defaultOptions} height={250} width={400} />;
+  return (
+    <Lottie
+      options={defaultOptions}
+      height={height || 250}
+      width={width || 400}
+    />
+  );
 };
 
 export default Loading;
