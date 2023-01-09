@@ -1,4 +1,6 @@
 import { gql } from "@apollo/client";
+import { RESTDataSource } from "apollo-datasource-rest";
+import { formatEvolvesPokemon } from "utils/utils";
 
 export const POKEMON_QUERY = gql`
   query pokemons($limit: Int, $offset: Int) {
@@ -51,3 +53,16 @@ export const THEME = gql`
     isDark @client
   }
 `;
+
+// API do graphQL não está exportando o id da espécie (id da espécie é diferente da pokedex)
+export const getPokemonSpecies = (id: string | number) => {
+  return fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((T) =>
+    T.json()
+  );
+};
+
+export const getEvolutionChain = async (endpoint: string) => {
+  return formatEvolvesPokemon(
+    await fetch(endpoint).then((response) => response.json())
+  );
+};

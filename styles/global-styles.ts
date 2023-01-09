@@ -26,6 +26,8 @@ const GlobalStyles = createGlobalStyle`
       opacity: 0.5;
       cursor: pointer;
     }
+
+   
   }
   html {
     height: 100%;

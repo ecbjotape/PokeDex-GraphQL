@@ -1,11 +1,11 @@
 import { selector } from "recoil";
 
-import { isDarkTheme as theme } from "../index";
+import { isDarkTheme as themeDefault } from "../index";
 
 export const isDarkTheme = selector({
   key: "isDarkTheme",
   get: ({ get }) => {
-    const isDark = get(theme);
+    const isDark = get(themeDefault);
 
     return isDark;
   },

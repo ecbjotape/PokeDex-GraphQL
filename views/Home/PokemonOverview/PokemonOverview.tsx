@@ -1,7 +1,5 @@
-import { theme } from "atoms/theme";
 import Toggle from "components/Toggle";
-import { useRecoilState } from "recoil";
-import { attributes, types } from "types/pokemon";
+import { attributes, Pokemon, types } from "types/pokemon";
 import { formatKgToLbs, formatMetersToFeet } from "utils/utils";
 import {
   Card,
@@ -10,6 +8,7 @@ import {
   CardType,
   ContainerElement,
   ContentElement,
+  EvolutionCard,
   NameElement,
   Row,
   StatsElements,
@@ -25,7 +24,8 @@ interface PokemonOverviewProps {
   weight: number;
   height: number;
   stats: any;
-  evolutions: any;
+  evolutions: Pokemon[];
+  text: string;
 }
 
 const PokemonOverview = ({
@@ -37,6 +37,7 @@ const PokemonOverview = ({
   height,
   artwork,
   stats,
+  text,
   evolutions,
 }: PokemonOverviewProps) => {
   const attributes: any = {
@@ -104,7 +105,22 @@ const PokemonOverview = ({
           </Card>
         </CardElement>
         <CardElement>
-          <Card>Evolutions</Card>
+          <Card>
+            <div
+              style={{
+                alignSelf: "flex-start",
+              }}
+            >
+              Evolutions
+            </div>
+            {evolutions.map((evolves: Pokemon) => (
+              <EvolutionCard>
+                <img src={evolves.artwork} alt="envolve" />
+                <p>{evolves.name}</p>
+              </EvolutionCard>
+            ))}
+          </Card>
+          <Card>{text}</Card>
         </CardElement>
       </ContentElement>
     </ContainerElement>

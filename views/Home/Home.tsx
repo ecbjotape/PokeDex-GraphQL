@@ -1,15 +1,17 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
 import Loading from "components/Loading";
 import Toggle from "components/Toggle";
-import { EVOLUTION_BY_ID, POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
+import { getEvolutionChain, getPokemonSpecies } from "config/querys";
+import { POKEMON_BY_NAME, POKEMON_QUERY } from "config/querys";
 import { useMemo, useState } from "react";
 import { Pokemon } from "types/pokemon";
+import { formatEvolvesPokemon } from "utils/utils";
 import PokemonOverview from "./PokemonOverview";
-
 import {
   Center,
   Container,
   ContainerElement,
+  ContentElement,
   Input,
   Line,
   Menu,
@@ -20,13 +22,17 @@ import {
   Text,
 } from "./styles";
 
+let pokemonSpecie: any;
+
 const Home = () => {
   const [pokemonSelected, setPokemonSelected] = useState<Pokemon>();
   const [searchPokemon, setSearchPokemon] = useState("");
+  const [pokemonEvolution, setPokemonEvolution] = useState<Pokemon[]>([]);
 
   let { loading, data: pokeData } = useQuery(POKEMON_QUERY, {
     variables: {
       limit: 1154,
+      offset: 0,
     },
   });
 
@@ -37,20 +43,32 @@ const Home = () => {
       },
     });
 
-  const [getEvolutionsById, { data: evolutions }] = useLazyQuery(
-    EVOLUTION_BY_ID,
-    {
-      variables: {
-        id: String(pokemonSelected?.id),
-      },
-    }
-  );
-
-  const getPokemonSelected = (pokemon: Pokemon) => {
+  const getPokemonSelected = async (pokemon: Pokemon) => {
     setPokemonSelected(pokemon);
 
-    getEvolutionsById();
     getPokemonByName();
+    // requets specie do pokemon para pegar o id das evoluções
+    pokemonSpecie = await getPokemonSpecies(pokemon.id);
+    console.log(pokemonSpecie);
+    // request evoluções com o id pegado anteriormente
+    const evolutions = await getEvolutionChain(
+      pokemonSpecie.evolution_chain.url
+    );
+
+    let evolution: Pokemon[] = [];
+
+    // seleciona as evoluções da lista de pokemon com base no nome
+    filteredPokemonList.map((p: Pokemon) => {
+      evolutions.map((ev: string) => {
+        if (
+          p.name.toLowerCase() == ev &&
+          p.name.toLowerCase() !== pokemon?.name.toLowerCase()
+        )
+          evolution.push(p);
+      });
+    });
+
+    setPokemonEvolution(evolution);
   };
 
   const filteredPokemonList = useMemo(() => {
@@ -120,14 +138,18 @@ const Home = () => {
       </Menu>
 
       {!pokemonSelected && (
-        <ContainerElement>
-          <OakImg src="/images/prof-oak.png" alt="imagem do professor oak" />
-          <Center>
-            <h1>choose your pokemon</h1>
-            <Loading option="dugtrio" height={120} width={250} />
+        <ContentElement>
+          <div style={{ display: "flex", alignSelf: "flex-end" }}>
             <Toggle />
-          </Center>
-        </ContainerElement>
+          </div>
+          <ContainerElement>
+            <OakImg src="/images/prof-oak.png" alt="imagem do professor oak" />
+            <Center>
+              <h1>choose your pokemon</h1>
+              <Loading option="dugtrio" height={120} width={250} />
+            </Center>
+          </ContainerElement>
+        </ContentElement>
       )}
 
       {requestPokemon && (
@@ -141,14 +163,15 @@ const Home = () => {
       {pokemon && pokemonSelected && (
         <PokemonOverview
           id={pokemon?.pokemon?.id}
-          image={pokemonSelected?.image}
+          image={pokemonSelected.image}
           artwork={pokemonSelected.artwork}
           name={pokemon?.pokemon?.name}
           types={pokemon?.pokemon?.types}
           height={pokemon?.pokemon?.height}
           weight={pokemon?.pokemon?.weight}
           stats={pokemon?.pokemon?.stats}
-          evolutions={evolutions?.evolutionChain?.response?.chain}
+          text={pokemonSpecie?.form_descriptions[0]?.description}
+          evolutions={pokemonEvolution}
         />
       )}
     </Container>

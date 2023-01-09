@@ -13,7 +13,7 @@ const Toggle = () => {
           id="checkbox"
           type="checkbox"
           onClick={() => setIsDarkTheme(!isDarkTheme)}
-          checked={isDarkTheme}
+          defaultChecked={isDarkTheme}
         />
         <CheckBoxLabel htmlFor="checkbox" />
       </CheckBoxWrapper>

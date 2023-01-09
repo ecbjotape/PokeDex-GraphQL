@@ -5,7 +5,7 @@ export const Container = styled.div`
   grid-template-columns: 20% 80%;
   height: 100vh;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1100px) {
     display: flex;
     flex-direction: column;
   }
@@ -13,6 +13,7 @@ export const Container = styled.div`
 
 export const Menu = styled.div`
   background: ${({ theme }) => theme.background.menu};
+  transition: width 2s;
   padding: 2em;
   display: flex;
   flex-direction: column;
@@ -45,6 +46,7 @@ export const Input = styled.input`
   width: 100%;
   padding: 8px;
   background-color: ${({ theme }) => theme.backgroundColor};
+  color: ${({ theme }) => theme.color};
   outline: none;
 `;
 
@@ -71,6 +73,11 @@ export const MenuContainer = styled.div`
   position: relative;
   width: 120%;
   padding-left: 2rem;
+
+  @media (max-width: 1100px) {
+    width: 100%;
+    height: 120px;
+  }
 `;
 
 export const ContainerElement = styled.div`
@@ -81,6 +88,12 @@ export const ContainerElement = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2em;
+`;
+export const ContentElement = styled.div`
+  background: ${({ theme }) => theme.background.containerElement};
+  display: flex;
+  flex-direction: column;
+  padding: 3em 4em 0em 4em;
 `;
 
 export const OakImg = styled.img`
@@ -97,5 +110,6 @@ export const Center = styled.div`
   h1 {
     font-size: 32px;
     font-weight: 500;
+    color: ${({ theme }) => theme.color};
   }
 `;

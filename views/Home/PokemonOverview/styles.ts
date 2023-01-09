@@ -3,7 +3,7 @@ import { stats, types } from "types/pokemon";
 
 export const ContainerElement = styled.div`
   background: ${({ theme }) => theme.background.containerElement};
-  padding: 1em 4em 0em 4em;
+  padding: 1em 4em 2em 4em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,7 +30,12 @@ export const ContentElement = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 3em;
   width: 100%;
+
+  @media (max-width: 1100px) {
+    display: block;
+  }
 `;
 
 export const CardElement = styled.div`
@@ -39,6 +44,7 @@ export const CardElement = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3em;
+  width: 100%;
 `;
 
 export const Card = styled.div`
@@ -46,7 +52,6 @@ export const Card = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  min-width: 250px;
   width: 100%;
   background: #fff;
   padding: 12px 16px;
@@ -55,12 +60,14 @@ export const Card = styled.div`
   gap: 1em;
   font-weight: 700;
   box-shadow: 1px 1px #c4c4c4;
-  flex-wrap: nowrap;
-  white-space: nowrap;
 
   p {
     color: #000;
     font-weight: 400;
+  }
+
+  @media (max-width: 1100px) {
+    margin-bottom: 8px;
   }
 `;
 
@@ -93,6 +100,7 @@ export const CardStats = styled.div<CardStatsProps>`
   align-items: center;
   justify-content: center;
   gap: 0.5em;
+  white-space: nowrap;
 
   p {
     color: ${(props) => props.theme.color};
@@ -113,4 +121,16 @@ export const Row = styled.div`
   flex-direction: row;
   width: 100%;
   gap: 1em;
+`;
+
+export const EvolutionCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+
+  img {
+    max-width: 120px;
+  }
 `;

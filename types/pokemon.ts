@@ -45,3 +45,14 @@ export type stats =
   | "sprecial-attack"
   | "special-defense"
   | "speed";
+
+export type evolves_to = {};
+export type evolutionChain = {
+  chain: {
+    evolves_to: [];
+  };
+  species: {
+    name: string;
+  };
+  evolves_to: [];
+};
