@@ -81,7 +81,10 @@ export const Card = styled.div`
 
   @media (max-width: 1100px) {
     margin-bottom: 8px;
-    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
 
     img {
       width: 50%;
@@ -185,5 +188,10 @@ export const EvolutionCard = styled.div`
 
   img {
     max-width: 120px;
+  }
+
+  @media (max-width: 1100px) {
+    align-items: center;
+    width: auto;
   }
 `;
