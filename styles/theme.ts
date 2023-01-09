@@ -7,6 +7,7 @@ export const lightTheme = {
   text: "#000",
   accent: "#0880AE",
   color: "#FFF",
+  inputText: "#000",
   typesColor: {
     normal: "#A8A77A",
     fire: "#EE8130",
@@ -79,5 +80,6 @@ export const darkTheme = {
   text: "#000",
   accent: "#8A85FF",
   color: "#fff",
+  inputText: "#fff",
   backgroundColor: "#000",
 };

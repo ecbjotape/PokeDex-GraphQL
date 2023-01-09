@@ -21,7 +21,8 @@ export const Menu = styled.div`
 
   img {
     margin-bottom: 24px;
-    width: 100%;
+    width: 80%;
+    object-fit: cover;
   }
 `;
 
@@ -44,9 +45,9 @@ export const Input = styled.input`
   border-radius: 15px;
   height: 100%;
   width: 100%;
-  padding: 8px;
+  padding: 16px;
   background-color: ${({ theme }) => theme.backgroundColor};
-  color: ${({ theme }) => theme.color};
+  color: ${({ theme }) => theme.inputText};
   outline: none;
 `;
 

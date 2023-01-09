@@ -5,10 +5,7 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  position: absolute;
-  top: 5%;
-  left: 90%;
+  gap: 20%;
 
   img {
     width: 21px;
@@ -19,6 +16,7 @@ export const Container = styled.div`
     transform: rotateY(180deg);
   }
 `;
+
 export const CheckBoxWrapper = styled.div`
   position: relative;
 `;

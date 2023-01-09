@@ -24,12 +24,19 @@ export const NameElement = styled.p`
   color: ${({ theme }) => theme.color};
   font-size: 48px;
   gap: 0.5em;
+
+  @media (max-width: 1100px) {
+    font-size: 100%;
+
+    img {
+      width: 100%;
+    }
+  }
 `;
 
 export const ContentElement = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 3em;
   width: 100%;
 
@@ -41,7 +48,6 @@ export const ContentElement = styled.div`
 export const CardElement = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 3em;
   width: 100%;
@@ -53,12 +59,46 @@ export const Card = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-height: 495px;
   background: #fff;
-  padding: 12px 16px;
+  padding: 12px;
   color: #000;
   border-radius: 8px;
   gap: 1em;
   font-weight: 700;
+  box-shadow: 1px 1px #c4c4c4;
+  white-space: nowrap;
+
+  p {
+    color: #000;
+    font-weight: 400;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 1100px) {
+    margin-bottom: 8px;
+    width: 100%;
+
+    img {
+      width: 50%;
+    }
+  }
+`;
+
+export const CardText = styled.div`
+  width: 100%;
+  max-height: 495px;
+  overflow: auto;
+  background: #fff;
+  padding: 21px;
+  color: #000;
+  border-radius: 8px;
+  gap: 1em;
+  font-weight: 500;
   box-shadow: 1px 1px #c4c4c4;
 
   p {
@@ -82,6 +122,7 @@ export const CardType = styled.div<CardTypeProps>`
   border-radius: 8px;
   font-weight: 400;
   text-transform: uppercase;
+  max-width: 120px;
 `;
 
 interface CardStatsProps {
@@ -105,6 +146,10 @@ export const CardStats = styled.div<CardStatsProps>`
   p {
     color: ${(props) => props.theme.color};
   }
+
+  @media (max-width: 1100px) {
+    width: 100px;
+  }
 `;
 
 export const StatsElements = styled.div`
@@ -114,13 +159,21 @@ export const StatsElements = styled.div`
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   gap: 1em;
+  width: 100%;
+
+  @media (max-width: 1100px) {
+    flex-direction: column;
+  }
 `;
 
 export const EvolutionCard = styled.div`

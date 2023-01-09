@@ -12,6 +12,7 @@ import { darkTheme, lightTheme } from "styles/theme";
 
 const Theme = ({ children }: any) => {
   const isDark = useRecoilValue(isDarkTheme);
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       {children}

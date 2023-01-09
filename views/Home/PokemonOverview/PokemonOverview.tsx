@@ -5,6 +5,7 @@ import {
   Card,
   CardElement,
   CardStats,
+  CardText,
   CardType,
   ContainerElement,
   ContentElement,
@@ -65,18 +66,20 @@ const PokemonOverview = ({
               src={artwork}
               alt="imagem do pokemon"
               style={{
-                width: "320px",
-                height: "320px",
+                maxWidth: "320px",
+                maxHeight: "320px",
               }}
             />
           </Card>
           <Card style={{ justifyContent: "flex-start", paddingLeft: "40px" }}>
             Type
-            {types?.map((type: { type: { name: any } }) => (
-              <CardType key={type.type.name} type={type.type.name}>
-                {type.type.name}
-              </CardType>
-            ))}
+            <Row>
+              {types?.map((type: { type: { name: any } }) => (
+                <CardType key={type.type.name} type={type.type.name}>
+                  {type.type.name}
+                </CardType>
+              ))}
+            </Row>
           </Card>
           <Row>
             <Card>
@@ -120,7 +123,9 @@ const PokemonOverview = ({
               </EvolutionCard>
             ))}
           </Card>
-          <Card>{text}</Card>
+          <CardText>
+            <p>{text}</p>
+          </CardText>
         </CardElement>
       </ContentElement>
     </ContainerElement>

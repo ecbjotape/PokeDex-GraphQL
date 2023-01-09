@@ -49,7 +49,7 @@ const Home = () => {
     getPokemonByName();
     // requets specie do pokemon para pegar o id das evoluções
     pokemonSpecie = await getPokemonSpecies(pokemon.id);
-    console.log(pokemonSpecie);
+
     // request evoluções com o id pegado anteriormente
     const evolutions = await getEvolutionChain(
       pokemonSpecie.evolution_chain.url
@@ -170,7 +170,7 @@ const Home = () => {
           height={pokemon?.pokemon?.height}
           weight={pokemon?.pokemon?.weight}
           stats={pokemon?.pokemon?.stats}
-          text={pokemonSpecie?.form_descriptions[0]?.description}
+          text={pokemonSpecie?.flavor_text_entries[0]?.flavor_text}
           evolutions={pokemonEvolution}
         />
       )}
