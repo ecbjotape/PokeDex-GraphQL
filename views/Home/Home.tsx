@@ -116,7 +116,7 @@ const Home = () => {
         <MenuContainer>
           {loading ? (
             <Center style={{ flexDirection: "column" }}>
-              <Loading option="pokeball" width="50%" />
+              <Loading option="pokeball" width="30%" />
               <p>loading...</p>
             </Center>
           ) : filteredPokemonList?.length > 0 ? (
@@ -146,7 +146,7 @@ const Home = () => {
             <OakImg src="/images/prof-oak.png" alt="imagem do professor oak" />
             <Center>
               <h1>choose your pokemon</h1>
-              <Loading option="dugtrio" height={120} width={250} />
+              <Loading option="dugtrio" height="50%" width="50%" />
             </Center>
           </ContainerElement>
         </ContentElement>
